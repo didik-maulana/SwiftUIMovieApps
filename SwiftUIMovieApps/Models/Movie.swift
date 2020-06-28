@@ -18,7 +18,11 @@ struct Movie: Decodable {
     let backdopPath: String?
     let posterPath: String?
     let overview: String
-    let average: Double
+    let voteAverage: Double
     let voteCount: Int
     let runtime: Int?
+    
+    var backdropURL: URL? {
+        return URL(string: "https://image.tmdb.org/t/p/w500\(backdopPath ?? "")")
+    }
 }
