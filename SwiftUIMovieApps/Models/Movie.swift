@@ -25,4 +25,8 @@ struct Movie: Decodable, Identifiable {
     var backdropURL: URL? {
         return URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath ?? "")")
     }
+    
+    var posterURL: URL? {
+        return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath ?? "")")
+    }
 }

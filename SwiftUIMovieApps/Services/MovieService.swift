@@ -15,7 +15,7 @@ protocol MovieService {
 }
 
 enum MovieListEndpoint: String, CaseIterable {
-    case nowPlaying = "now_paying"
+    case nowPlaying = "now_playing"
     case upcoming
     case topRated = "top_rated"
     case popular
