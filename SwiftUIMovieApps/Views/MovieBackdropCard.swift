@@ -30,6 +30,7 @@ struct MovieBackdropCard: View {
             
             Text(movie.title)
         }
+        .lineLimit(1)
         .onAppear() {
             if let backdroupURL = self.movie.backdropURL {
                 self.imageLoader.loadImage(with: backdroupURL)
