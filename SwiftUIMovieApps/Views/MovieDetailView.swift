@@ -49,6 +49,7 @@ struct MovieDetailListView: View {
             }
             
             Text(movie.overview)
+            
             HStack {
                 if !movie.ratingText.isEmpty {
                     Text(movie.ratingText)
@@ -56,7 +57,34 @@ struct MovieDetailListView: View {
                 }
                 Text(movie.scoreText)
             }
+            
             Divider()
+            
+            HStack(alignment: .top, spacing: 4) {
+                if self.movie.cast != nil {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Starring")
+                            .font(.headline)
+                        ForEach(self.movie.cast!.prefix(9)) { cast in
+                            Text(cast.name)
+                        }
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                }
+                
+                if movie.crew != nil && movie.crew!.count > 0 {
+                    VStack(alignment: .leading, spacing: 4) {
+                        if movie.directors != nil && movie.directors!.count > 0 {
+                            Text("Director(s)")
+                                .font(.headline)
+                            ForEach(self.movie.directors!.prefix(2)) { director in
+                                Text(director.name)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
