@@ -62,8 +62,8 @@ struct MovieListView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 16, trailing: 0))
             }
+            .navigationBarTitle("Movie Apps")
         }
-        .navigationBarTitle("Movies Apps")
         .onAppear() {
             self.nowPlayingState.loadMovies(with: .nowPlaying)
             self.upcomingState.loadMovies(with: .upcoming)

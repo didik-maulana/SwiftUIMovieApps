@@ -12,23 +12,20 @@ struct MovieDetailView: View {
     
     let movieId: Int
     @ObservedObject private var movieDetailState = MovieDetailState()
-    @State private var selectedTrailer: MovieVideo?
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                LoadingView(isLoading: movieDetailState.isLoading, error: movieDetailState.error) {
-                    self.movieDetailState.loadMovie(id: self.movieId)
-                }
-                
-                if self.movieDetailState.movie != nil {
-                    MovieDetailListView(movie: self.movieDetailState.movie!)
-                }
-            }
-            .navigationBarTitle(movieDetailState.movie?.title ?? "")
-            .onAppear {
+        ZStack {
+            LoadingView(isLoading: movieDetailState.isLoading, error: movieDetailState.error) {
                 self.movieDetailState.loadMovie(id: self.movieId)
             }
+            
+            if self.movieDetailState.movie != nil {
+                MovieDetailListView(movie: self.movieDetailState.movie!)
+            }
+        }
+        .navigationBarTitle(movieDetailState.movie?.title ?? "")
+        .onAppear {
+            self.movieDetailState.loadMovie(id: self.movieId)
         }
     }
 }
@@ -36,12 +33,13 @@ struct MovieDetailView: View {
 struct MovieDetailListView: View {
     
     let movie: Movie
+    private let imageLoader = ImageLoader()
     @State private var selectedTrailer: MovieVideo?
     
     var body: some View {
         List {
             if self.movie.backdropURL != nil {
-                MovieDetailImage(imageURL: self.movie.backdropURL!)
+                MovieDetailImage(imageLoader: imageLoader, imageURL: self.movie.backdropURL!)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
             
@@ -92,7 +90,7 @@ struct MovieDetailListView: View {
 
 struct MovieDetailImage: View {
     
-    @ObservedObject private var imageLoader = ImageLoader()
+    @ObservedObject var imageLoader: ImageLoader
     let imageURL: URL
     
     var body: some View {
@@ -168,8 +166,6 @@ struct MovieDetailCreditsView: View {
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            MovieDetailView(movieId: Movie.stubbedMovie.id)
-        }
+        MovieDetailView(movieId: Movie.stubbedMovie.id)
     }
 }
