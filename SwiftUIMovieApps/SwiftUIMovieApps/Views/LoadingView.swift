@@ -26,7 +26,10 @@ struct LoadingView: View {
                 HStack {
                     Spacer()
                     VStack(spacing: 4) {
-                        Text(error!.localizedDescription).font(.headline)
+                        Text(error?.localizedDescription ?? "Request is error")
+                            .font(.headline)
+                            .lineLimit(2)
+                        
                         if self.retryAction != nil {
                             Button(action: self.retryAction!) {
                                 Text("Retry")
